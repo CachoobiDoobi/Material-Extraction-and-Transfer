@@ -1,5 +1,5 @@
 from material_selection import find_style_image
-from your_code_here import *
+from style_transfer import *
 
 # path of the image that will
 content_img_path = os.path.join('data', 'vase.jpg')

@@ -1,6 +1,6 @@
 import glob
 
-from your_code_here import *
+from style_transfer import *
 
 
 def get_images(style):
