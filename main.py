@@ -1,19 +1,30 @@
-from material_selection import find_style_image
-from style_transfer import *
+import numpy as np
 
-# path of the image that will
+from material_selection import find_material_image
+from material_transfer import *
+
+# path of the image the original image
 content_img_path = os.path.join('data', 'vase.jpg')
 content_img = image_loader(content_img_path, device=device, img_size=img_size)
 
-style_img = find_style_image(content_img, "extra")
-plt.imshow(transforms.ToPILImage()(style_img.squeeze(0)))
+# find suitable style image based on the type of texture
+material = find_material_image(content_img, "extra")
+plt.imshow(transforms.ToPILImage()(material.squeeze(0)))
 plt.show()
 
-
+# perform object segmentation and get boolean mask
 original = read_image(str(Path('D:\\Downloads D') / '000000002150.jpg'))
-new_style = run_style_transfer(content_img_path, style_img)
-
 mask = get_mask(original)
+mask_im = Image.Image.rotate(Image.fromarray(np.array(mask)), angle=-90)
+
+plt.imshow(mask_im)
+plt.show()
+mask_im.save("outputs/mask.jpg")
+
+# run the material transfer on the entire content image
+new_style = run_material_transfer(content_img_path, material)
+
+# use the mask to get the new material of the object of interest
 res = applyMaterial(mask, original, new_style)
 im = Image.fromarray((res * 255).astype(np.uint8))
 

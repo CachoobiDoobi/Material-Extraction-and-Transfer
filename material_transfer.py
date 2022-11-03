@@ -14,14 +14,15 @@ style_layers = ['conv1_1', 'conv2_1', 'conv3_1', 'conv4_1', 'conv5_1']
 
 torch.manual_seed(2022)  # Set random seed for better reproducibility
 device = 'cpu'
-if (torch.cuda.is_available()):
+if torch.cuda.is_available():
 
     device = 'cuda'
 else:
     print("we CUDA but we dont")
-# Make sure that if you use cuda that it also runs on CPU
 
 # Hyperparameters
+vgg_mean = torch.tensor([0.485, 0.456, 0.406]).to(device)
+vgg_std = torch.tensor([0.229, 0.224, 0.225]).to(device)
 img_size = 512
 # Sets of hyperparameters that worked well for us
 if img_size == 128:
@@ -238,15 +239,14 @@ def run_single_image(vgg_mean, vgg_std, content_img, style_img, num_steps=num_st
     return optim_img
 
 
-def run_style_transfer(content_img_path, style_img_1):
+def run_material_transfer(content_img_path, style_img_1):
     # Paths
     out_folder = 'outputs'
     content_img_path = content_img_path
 
     content_img = image_loader(content_img_path, device=device, img_size=img_size)
     # Define the channel-wise mean and standard deviation used for VGG training
-    vgg_mean = torch.tensor([0.485, 0.456, 0.406]).to(device)
-    vgg_std = torch.tensor([0.229, 0.224, 0.225]).to(device)
+
     # Single image optimization
     print('Start single style image optimization.')
     output1 = run_single_image(
