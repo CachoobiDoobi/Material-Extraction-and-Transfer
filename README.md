@@ -5,10 +5,11 @@
  - Output: material transfered image
 
 ## Overview
-1. A suitable material image is found based on the selected material type and content image
-2. The mask is computed using Mask R-CNN or read from a file
-3. Style transfer is peformed using the material image on the target image, based on the work of [Gatys 2016](https://www.cv-foundation.org/openaccess/content_cvpr_2016/papers/Gatys_Image_Style_Transfer_CVPR_2016_paper.pdf) 
-4. New image and old image are combined using the mask
+
+1. A suitable material image is found based on the selected material type and content image (material_selection.py lines 22-57) 
+2. The mask is computed using Mask R-CNN or read from a file (mask.py lines 7-35)
+3. Style transfer is peformed using the material image on the target image, based on the work of [Gatys 2016](https://www.cv-foundation.org/openaccess/content_cvpr_2016/papers/Gatys_Image_Style_Transfer_CVPR_2016_paper.pdf) (material_transfer.py lines 242-257, entire file is important)
+4. New image and old image are combined using the mask (mask.py lines 38-61)
     
 ## Installation
 - Install Conda: 
